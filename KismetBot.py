@@ -20,6 +20,7 @@ async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
 
 #api for dictionary bot v2
+#gets word definition
 async def getdef(word:str) -> dict:
     try:
         async with aiohttp.request('GET', f"https://api.dictionaryapi.dev/api/v2/entries/en_US/{word}") as resp:
@@ -27,6 +28,7 @@ async def getdef(word:str) -> dict:
             return d['meanings'][0]['definitions'][0]['definition']
     except Exception as e:
         return "This word doesn't exist in my database. Check your spelling or try clicking the blue text above to see whether Google Dictionary has it or not."
+#gets word example sentence
 async def getsen(word:str) -> dict:
     try:
         async with aiohttp.request('GET', f"https://api.dictionaryapi.dev/api/v2/entries/en_US/{word}") as resp:
@@ -34,6 +36,7 @@ async def getsen(word:str) -> dict:
             return d['meanings'][0]['definitions'][0]['example']
     except Exception as e:
         return "There is no sentence for this word in my database."
+#gets word part of speech
 async def getpofspeech(word:str) -> dict:
     try:
         async with aiohttp.request('GET', f"https://api.dictionaryapi.dev/api/v2/entries/en_US/{word}") as resp:
@@ -41,6 +44,7 @@ async def getpofspeech(word:str) -> dict:
             return d['meanings'][0]['partOfSpeech']
     except Exception as e:
         return "Part of speech unavailable."
+#gets words pronunciation 
 async def getphonetic(word:str) -> dict:
     try:
         async with aiohttp.request('GET', f"https://api.dictionaryapi.dev/api/v2/entries/en_US/{word}") as resp:
@@ -59,6 +63,7 @@ async def help(client):
 #dictionary bot
 @bot.command(aliases = ['definition', 'def', 'd', 'define'])
 async def clientsGetDef(client, word):
+    #gives users the ability to go to Google Dictionary if API can't find definition
     embed = discord.Embed (
         title = "Definition of " + word + ":",
         url = "https://www.google.com/search?q=definition+of+" + word,
@@ -66,6 +71,7 @@ async def clientsGetDef(client, word):
         color = 0x9b59b6
         )
 
+    #creates the cell that the definitions sit in
     embed.set_author(name = "Kismet", icon_url="https://static.dezeen.com/uploads/2022/01/la-piedad-sq2-411x411.jpg")
     embed.add_field(name = "Part of Speech", value = await (getpofspeech(word)), inline = True)
     embed.add_field(name = "Phonetics:", value = await (getphonetic(word)), inline = True)
@@ -76,8 +82,8 @@ async def clientsGetDef(client, word):
     await client.send(embed = embed)
     return
 
+#open the config.json file to obtain token 
 with open("config.json", "r") as file:
     token = json.load(file)
 
 bot.run(token["token"])
-#https://discord.com/api/oauth2/authorize?client_id=970409144106496040&permissions=2348923904&scope=bot
