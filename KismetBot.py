@@ -76,7 +76,8 @@ async def clientsGetDef(client, word):
     await client.send(embed = embed)
     return
 
+with open("config.json", "r") as file:
+    token = json.load(file)
 
-
-bot.run('OTcwNDA5MTQ0MTA2NDk2MDQw.Ym7h8Q.PjLym4Tzl5Gyi1ac3D3M2AexzMw')
+bot.run(token["token"])
 #https://discord.com/api/oauth2/authorize?client_id=970409144106496040&permissions=2348923904&scope=bot
