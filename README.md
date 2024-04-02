@@ -1,5 +1,5 @@
 # Kismet
-A discord bot that uses meetDeveloper's freeDictionaryAPI to provide word definitions in discord chats!
+A discord bot that uses meetDeveloper's freeDictionaryAPI to provide word definitions in discord chats
 
 ![KismetEx](https://github.com/ianyyam/Kismet/assets/88557640/054138d3-f84c-4e4f-891a-739e2c3b2264)
 
